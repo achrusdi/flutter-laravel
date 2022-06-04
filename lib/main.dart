@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:laravel_flutter/pages/signin_page.dart';
+import 'package:laravel_flutter/pages/signup_page.dart';
+import 'package:laravel_flutter/pages/splash_page.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'theme.dart';
 
@@ -9,23 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          'Halo Semuanya!',
-          style: GoogleFonts.poppins(
-            fontSize: 50,
-          ),
-        ),
-      ),
+      routes: {
+        '/': (context) => SpalshPage(),
+        '/signin': (context) => SigninPage(),
+        '/signup': (context) => SignupPage(),
+      },
     );
   }
 }
