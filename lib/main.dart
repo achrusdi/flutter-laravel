@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laravel_flutter/pages/home/main_page.dart';
 import 'package:laravel_flutter/pages/signin_page.dart';
 import 'package:laravel_flutter/pages/signup_page.dart';
 import 'package:laravel_flutter/pages/splash_page.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => SpalshPage(),
         '/signin': (context) => SigninPage(),
         '/signup': (context) => SignupPage(),
+        '/home': (context) => MainPage(),
       },
     );
   }
