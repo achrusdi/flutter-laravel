@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:laravel_flutter/theme.dart';
 import 'package:laravel_flutter/widgets/product_card.dart';
+import 'package:laravel_flutter/widgets/product_tile.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -201,12 +202,45 @@ class HomePage extends StatelessWidget {
       );
     }
 
+    Widget newArrivalsTitle() {
+      return Container(
+        margin: EdgeInsets.only(
+          top: defaultMargin,
+          left: defaultMargin,
+          right: defaultMargin,
+        ),
+        child: Text(
+          'New Arrivals',
+          style: primaryTextStyle.copyWith(
+            fontSize: 22,
+            fontWeight: semiBold,
+          ),
+        ),
+      );
+    }
+
+    Widget newArrivals() {
+      return Container(
+        margin: EdgeInsets.only(top: 14),
+        child: Column(
+          children: [
+            ProductTile(),
+            ProductTile(),
+            ProductTile(),
+            ProductTile(),
+          ],
+        ),
+      );
+    }
+
     return ListView(
       children: [
         header(),
         categoties(),
         popularProductTitle(),
         popularProduct(),
+        newArrivalsTitle(),
+        newArrivals(),
       ],
     );
   }
