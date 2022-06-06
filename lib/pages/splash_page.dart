@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:laravel_flutter/theme.dart';
 
-class SpalshPage extends StatefulWidget {
+class SplashPage extends StatefulWidget {
   @override
-  State<SpalshPage> createState() => _SpalshPageState();
+  State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SpalshPageState extends State<SpalshPage> {
+class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     Timer(Duration(seconds: 3), () => Navigator.pushNamed(context, '/signin'));
