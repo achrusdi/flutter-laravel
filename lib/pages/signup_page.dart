@@ -1,9 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:laravel_flutter/providers/auth_provider.dart';
 import 'package:laravel_flutter/theme.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage extends StatelessWidget {
+  TextEditingController nameController = TextEditingController(text: '');
+  TextEditingController usernameController = TextEditingController(text: '');
+  TextEditingController emailController = TextEditingController(text: '');
+  TextEditingController passwordController = TextEditingController(text: '');
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSignup() async {
+      if (await authProvider.register(
+          name: nameController.text,
+          username: usernameController.text,
+          email: emailController.text,
+          password: passwordController.text)) {
+        Navigator.of(context).pushReplacementNamed('/home');
+      }
+      Navigator.pushNamed(context, '/home');
+    }
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -51,6 +71,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    controller: nameController,
                     style: primaryTextStyle,
                     decoration: InputDecoration.collapsed(
                       hintText: 'Your Full Name',
@@ -91,7 +112,8 @@ class SignupPage extends StatelessWidget {
                 SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
-                    obscureText: true,
+                    controller: usernameController,
+                    // obscureText: true,
                     style: primaryTextStyle,
                     decoration: InputDecoration.collapsed(
                       hintText: 'Your Username',
@@ -132,6 +154,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    controller: emailController,
                     style: primaryTextStyle,
                     decoration: InputDecoration.collapsed(
                       hintText: 'Your Email Address',
@@ -172,6 +195,7 @@ class SignupPage extends StatelessWidget {
                 SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    controller: passwordController,
                     obscureText: true,
                     style: primaryTextStyle,
                     decoration: InputDecoration.collapsed(
@@ -193,7 +217,7 @@ class SignupPage extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {},
+          onPressed: handleSignup,
           style: TextButton.styleFrom(
               backgroundColor: primaryColor,
               shape: RoundedRectangleBorder(
