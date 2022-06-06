@@ -1,27 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:laravel_flutter/providers/auth_provider.dart';
 import 'package:laravel_flutter/theme.dart';
+import 'package:laravel_flutter/widgets/loading_button.dart';
 import 'package:provider/provider.dart';
 
-class SignupPage extends StatelessWidget {
+class SignupPage extends StatefulWidget {
+  @override
+  State<SignupPage> createState() => _SignupPageState();
+}
+
+class _SignupPageState extends State<SignupPage> {
   TextEditingController nameController = TextEditingController(text: '');
+
   TextEditingController usernameController = TextEditingController(text: '');
+
   TextEditingController emailController = TextEditingController(text: '');
+
   TextEditingController passwordController = TextEditingController(text: '');
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
     handleSignup() async {
+      setState(() {
+        isLoading = true;
+      });
+
       if (await authProvider.register(
           name: nameController.text,
           username: usernameController.text,
           email: emailController.text,
           password: passwordController.text)) {
-        Navigator.of(context).pushReplacementNamed('/home');
+        // Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.pushNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: alertColor,
+            content: Text(
+              'Failed to register',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
       }
-      Navigator.pushNamed(context, '/home');
+
+      setState(() {
+        isLoading = false;
+      });
     }
 
     Widget header() {
@@ -271,7 +300,7 @@ class SignupPage extends StatelessWidget {
               usernameInput(),
               emailInput(),
               passwordInput(),
-              signupButton(),
+              isLoading ? LoadingButton() : signupButton(),
               Spacer(),
               footer(),
             ],

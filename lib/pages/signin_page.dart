@@ -1,9 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:laravel_flutter/providers/auth_provider.dart';
 import 'package:laravel_flutter/theme.dart';
+import 'package:laravel_flutter/widgets/loading_button.dart';
+import 'package:provider/provider.dart';
 
-class SigninPage extends StatelessWidget {
+class SigninPage extends StatefulWidget {
+  @override
+  State<SigninPage> createState() => _SigninPageState();
+}
+
+class _SigninPageState extends State<SigninPage> {
+  TextEditingController emailController = TextEditingController(text: '');
+
+  TextEditingController passwordController = TextEditingController(text: '');
+
+  bool isLoading = false;
+
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleSignin() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (await authProvider.login(
+          email: emailController.text, password: passwordController.text)) {
+        // Navigator.of(context).pushReplacementNamed('/home');
+        Navigator.pushNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: alertColor,
+            content: Text(
+              'Failed to login',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(top: 30),
@@ -51,6 +93,7 @@ class SigninPage extends StatelessWidget {
                 SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    controller: emailController,
                     style: primaryTextStyle,
                     decoration: InputDecoration.collapsed(
                       hintText: 'Your Email Address',
@@ -91,6 +134,7 @@ class SigninPage extends StatelessWidget {
                 SizedBox(width: 16),
                 Expanded(
                   child: TextFormField(
+                    controller: passwordController,
                     obscureText: true,
                     style: primaryTextStyle,
                     decoration: InputDecoration.collapsed(
@@ -112,9 +156,7 @@ class SigninPage extends StatelessWidget {
         width: double.infinity,
         margin: EdgeInsets.only(top: 30),
         child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/home');
-          },
+          onPressed: handleSignin,
           style: TextButton.styleFrom(
               backgroundColor: primaryColor,
               shape: RoundedRectangleBorder(
@@ -166,7 +208,7 @@ class SigninPage extends StatelessWidget {
               header(),
               emailInput(),
               passwordInput(),
-              signinButton(),
+              isLoading ? LoadingButton() : signinButton(),
               Spacer(),
               footer(),
             ],

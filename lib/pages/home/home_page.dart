@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:laravel_flutter/models/user.model.dart';
+import 'package:laravel_flutter/providers/auth_provider.dart';
 import 'package:laravel_flutter/theme.dart';
 import 'package:laravel_flutter/widgets/product_card.dart';
 import 'package:laravel_flutter/widgets/product_tile.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    UserModel user = authProvider.user;
+
+    final Widget svg = new SvgPicture.network(
+      user.profilePhotoUrl,
+    );
+
     Widget header() {
       return Container(
         margin: EdgeInsets.only(
@@ -17,13 +29,13 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hallo, Alex',
+                    'Hallo, ${user.name}',
                     style: primaryTextStyle.copyWith(
                       fontSize: 24,
                       fontWeight: semiBold,
                     ),
                   ),
-                  Text('@alexkeinn',
+                  Text('@${user.username}',
                       style: subtitleTextStyle.copyWith(
                         fontSize: 16,
                       )),
@@ -38,6 +50,11 @@ class HomePage extends StatelessWidget {
                     shape: BoxShape.circle,
                     image: DecorationImage(
                       image: AssetImage('assets/Image_Profile.png'),
+                      // image: NetworkImage(user.profilePhotoUrl),
+                      // image: Svg(svg),
+                      // image: SvgPicture.asset('assets/Image_Profile1.svg')
+                      // image: NetworkImage(
+                      //     'https://ui-avatars.com/api/?name=n&color=7F9CF5&background=EBF4FF'),
                     )),
               ),
               onTap: () {},
