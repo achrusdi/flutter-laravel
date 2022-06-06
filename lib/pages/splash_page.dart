@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:laravel_flutter/providers/product_provider.dart';
 import 'package:laravel_flutter/theme.dart';
+import 'package:provider/provider.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -11,7 +13,14 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Timer(Duration(seconds: 3), () => Navigator.pushNamed(context, '/signin'));
+    getInit();
+    super.initState();
+  }
+
+  getInit() async {
+    await Provider.of<ProductProvider>(context, listen: false).getProducts();
+    Navigator.pushNamed(context, '/signin');
+    // Timer(Duration(seconds: 3), () => Navigator.pushNamed(context, '/signin'));
   }
 
   @override

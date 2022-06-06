@@ -1,12 +1,11 @@
 import 'dart:convert';
 
+import 'package:laravel_flutter/global_variable.dart';
 import 'package:laravel_flutter/models/user.model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  // String baseUrl = 'http://127.0.0.1:8000/api';
-  String baseUrl =
-      'https://3ed1-2001-448a-5020-9201-86e-21b7-1a35-969d.ap.ngrok.io/api';
+  String baseUrl = globalBaseUrl;
   Future<UserModel> register({
     required String name,
     required String email,

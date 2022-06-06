@@ -5,6 +5,7 @@ import 'package:laravel_flutter/pages/signin_page.dart';
 import 'package:laravel_flutter/pages/signup_page.dart';
 import 'package:laravel_flutter/pages/splash_page.dart';
 import 'package:laravel_flutter/providers/auth_provider.dart';
+import 'package:laravel_flutter/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'theme.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

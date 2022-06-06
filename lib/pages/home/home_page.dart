@@ -64,7 +64,7 @@ class HomePage extends StatelessWidget {
       );
     }
 
-    Widget categoties() {
+    Widget categories() {
       return Container(
         margin: EdgeInsets.only(top: defaultMargin),
         child: SingleChildScrollView(
@@ -256,7 +256,7 @@ class HomePage extends StatelessWidget {
     return ListView(
       children: [
         header(),
-        categoties(),
+        categories(),
         popularProductTitle(),
         popularProduct(),
         newArrivalsTitle(),
